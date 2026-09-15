@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+  # 1. API Gateway
+  api:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - MODEL_SERVING_URL=http://mlflow-serving:5001/invocations
+      - VISION_MODEL_PATH=/app/models/heritage_classifier.h5
+      - RECOMMENDER_MODEL_PATH=/app/models/tourism_recommender.pkl
+    volumes:
+      - ./models:/app/models
+      - ./data:/app/data
+      - ./src:/app/src
+    depends_on:
+      - mlflow-serving
+
+  # 2. Frontend (Next.js)
+  frontend:
+    build: 
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8000
+    depends_on:
+      - api
+
+  # 3. Model Serving Service (MLflow)
+  mlflow-serving:
+    build:
+      context: .
+    command: >
+      mlflow models serve 
+      -m /models/VisionModel 
+      -p 5001 
+      --host 0.0.0.0 
+      --no-conda
+    volumes:
+      - ./mlruns:/mlruns
+      # In a real setup, we'd pull from S3/Registry. 
+      # Here we mount the local artifact path where we saved the PyFunc model
+      - ./models/heritage_classifier:/models/VisionModel
+    ports:
+      - "5001:5001"
+    environment:
+      - MLFLOW_TRACKING_URI=sqlite:///mlflow.db
+
+  # 4. MLflow UI (Experiment Tracking)
+  mlflow-ui:
+    build:
+      context: .
+    command: mlflow ui --host 0.0.0.0 --port 5000 --backend-store-uri sqlite:///mlflow.db
+    ports:
+      - "5005:5000"
+    volumes:
+      - ./mlruns:/mlruns
+      - ./mlflow.db:/mlflow.db

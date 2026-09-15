@@ -1,0 +1,12 @@
+channels:
+- conda-forge
+dependencies:
+- python=3.10.14
+- pip<=24.0
+- pip:
+  - mlflow==3.8.1
+  - tensorflow
+  - numpy
+  - opencv-python-headless
+  - pandas
+name: mlflow-env

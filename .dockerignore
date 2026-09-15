@@ -1,0 +1,25 @@
+# Git
+.git
+.gitignore
+
+# Python
+__pycache__/
+*.py[cod]
+*.so
+
+# Data Layers (Too large, mount via volume instead if needed)
+data/
+mlruns/
+models/
+
+# Project Artifacts
+notebooks/
+tests/
+docs/
+*.md
+
+# Environment
+.env
+venv/
+.pytest_cache/
+.coverage

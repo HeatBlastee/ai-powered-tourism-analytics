@@ -1,0 +1,24 @@
+# API Dependencies
+fastapi==0.128.0
+uvicorn
+pydantic==2.12.5
+pydantic-settings==2.12.0
+python-multipart==0.0.21
+requests==2.32.3
+python-dotenv==1.0.1
+
+# Recommender Model Dependencies
+pandas==2.2.3
+numpy==1.26.4
+scikit-learn==1.7.2
+faiss-cpu==1.13.2
+openpyxl
+tensorflow
+opencv-python-headless
+
+# Tracing
+mlflow==3.8.1
+
+# Testing
+pytest==9.0.2
+httpx==0.28.1

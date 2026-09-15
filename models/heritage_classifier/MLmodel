@@ -1,0 +1,24 @@
+flavors:
+  python_function:
+    artifacts:
+      class_indices:
+        path: artifacts/class_indices.json
+        uri: /Users/krishna/workspace/ai-powered-tourism-analytics/models/class_indices.json
+      keras_model:
+        path: artifacts/heritage_classifier.h5
+        uri: /Users/krishna/workspace/ai-powered-tourism-analytics/models/heritage_classifier.h5
+    cloudpickle_version: 3.1.2
+    code: null
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.pyfunc.model
+    python_model: python_model.pkl
+    python_version: 3.10.14
+    streamable: false
+mlflow_version: 3.8.1
+model_id: null
+model_size_bytes: 32804727
+model_uuid: b8204448df80451ab0514483d570939d
+prompts: null
+utc_time_created: '2026-01-26 09:54:12.819053'
